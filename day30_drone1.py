@@ -41,11 +41,17 @@ class Drone():
             return "정상 속도"
     def analyze_commands(self):
         count = {}
-        for cmd in commands():
+        for cmd in self.commands():
             if cmd in count:
                 count[cmd] += 1
             else:
                 count[cmd] = 1
+        print("총 명령 수", len(self.commands))
+        print("상승 횟수: ", count.get("상승", 0))
+        print("하강 횟수: ", count.get("하강", 0))
+        print("가속 횟수: ", count.get("가속", 0))
+        print("감속 횟수: ", count.get("감속", 0))
+        print("자동착륙 횟수: ", count.get("자동착륙", 0))
 
         
     def show_status(self):
@@ -89,7 +95,7 @@ while True:
     print(name, "접속 완료")
 
     while True:
-        cmd = input("명령 입력(상승/하강/가속/감속/충전/상태/전체상태/로그아웃):")
+        cmd = input("명령 입력(상승/하강/가속/감속/충전/상태/전체상태/로그분석/로그아웃):")
 
         if cmd == "로그아웃":
             print(name, "접속 종료")
@@ -114,7 +120,8 @@ while True:
             for d_name, drone in drones.items():
                 print("드론:", d_name)
                 drone.show_status()
-        elif cmd == "로그 분석":
+            continue
+        elif cmd == "로그분석":
             drones[name].analyze_commands()
             continue
 
